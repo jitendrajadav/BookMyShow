@@ -1,4 +1,5 @@
-﻿using BookMyShow.Model;
+﻿using BookMyShow.Common;
+using BookMyShow.Model;
 using BookMyShow.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -21,15 +22,44 @@ namespace BookMyShow.View
 {
 	public sealed partial class DetailView : Page
 	{
+        private NavigationHelper navigationHelper;
+
 		DetailViewModel vm;
 		public DetailView()
 		{
 			this.InitializeComponent();
+            this.navigationHelper = new NavigationHelper(this);
+
 			vm = new DetailViewModel();
         }
 
+        /// <summary>
+        /// Gets the <see cref="NavigationHelper"/> associated with this <see cref="Page"/>.
+        /// </summary>
+        public NavigationHelper NavigationHelper
+        {
+            get { return this.navigationHelper; }
+        }
+
+        #region NavigationHelper registration
+
+        /// <summary>
+        /// The methods provided in this section are simply used to allow
+        /// NavigationHelper to respond to the page's navigation methods.
+        /// <para>
+        /// Page specific logic should be placed in event handlers for the  
+        /// <see cref="NavigationHelper.LoadState"/>
+        /// and <see cref="NavigationHelper.SaveState"/>.
+        /// The navigation parameter is available in the LoadState method 
+        /// in addition to page state preserved during an earlier session.
+        /// </para>
+        /// </summary>
+        /// <param name="e">Provides data for navigation methods and event
+        /// handlers that cannot cancel the navigation request.</param>
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
+            this.navigationHelper.OnNavigatedTo(e);
+
 			vm.setData((Result)e.Parameter);
 			this.DataContext = vm;
 			// TODO: Prepare page for display here.
@@ -41,5 +71,11 @@ namespace BookMyShow.View
 			// this event is handled for you.
 		}
 
-	}
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            this.navigationHelper.OnNavigatedFrom(e);
+        }
+
+        #endregion
+    }
 }
