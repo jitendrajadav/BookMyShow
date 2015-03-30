@@ -16,17 +16,18 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
         <Image>
             <Image.Source>
                 <BitmapImage UriSource="{Binding Icon}"/>
             </Image.Source>
         </Image>
-			<!--<Image  Source="{Binding Icon}" Stretch="None" HorizontalAlignment="Center" Grid.Row="0"/>-->
 			<TextBlock Text="{Binding Name}" FontSize="25"  TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="1"/>
 			<TextBlock Text="{Binding Types}" FontSize="25"  TextWrapping="Wrap" Grid.Row="2"/>
 			<TextBlock Text="{Binding Lat}" FontSize="25" Margin="0,0,0,10" Grid.Row="3"/>
 			<TextBlock Text="{Binding Vicinity}" FontSize="25"  TextWrapping="Wrap" Grid.Row="4"/>
+        <Button Grid.Row="5" Content="Tap to Map" HorizontalAlignment="Center" BorderThickness="1" Click="Button_Click"/>
 	</Grid>
 
 </Page>

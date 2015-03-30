@@ -58,7 +58,7 @@ namespace BookMyShow.ViewModel
 				string type = (string)localSettings.Values["type"];
 				var client = new HttpClient();
 
-				var result = await client.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + value.Split(',').FirstOrDefault() + "," + value.Split(',').LastOrDefault() + "&radius=500&types=" + type + "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg"));
+                var result = await client.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=" + value.Split(',').FirstOrDefault() + "," + value.Split(',').LastOrDefault() + "&radius=500&types=" + type + "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg"));
 				var placesList = SerializeDeserialize.Deserialize<RootObject>(result);
 				PlaceList = placesList.results;
 			}
