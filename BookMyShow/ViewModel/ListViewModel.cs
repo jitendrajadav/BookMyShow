@@ -66,7 +66,8 @@ namespace BookMyShow.ViewModel
 			{
 				throw;
 			}
-		} 
+		}
+
 		#endregion
 	}
 }

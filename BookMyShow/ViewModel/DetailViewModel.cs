@@ -24,6 +24,9 @@ namespace BookMyShow.ViewModel
 
 		#region Properties
 
+        string basePath = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
+        string key = "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg";
+
 		#region Icon
 
 		private string _Icon;
@@ -119,21 +122,17 @@ namespace BookMyShow.ViewModel
 		#endregion
 
 		#region Methods
+
 		internal void setData(Result parameter)
-		{
+        {
+            string photo_reference = parameter.photos != null ? parameter.photos.FirstOrDefault().photo_reference : string.Empty;
 			this.Name = parameter.name;
-			this.Icon = parameter.icon;
+            this.Icon = basePath + photo_reference + key;
 			this.Types = parameter.types.FirstOrDefault();
 			this.Lat = parameter.geometry.location.lat.ToString();
 			this.Vicinity = parameter.vicinity;
 		}
 
-		internal async void getData()
-		{
-			var client = new HttpClient();
-			string reference = "CnRmAAAAHptbeGXdEl990NE90FPiutF-tkTe4VPsr30BUF0zNDUyvKJ1sSN7go1yEHaOllFschtfWcdyWOUeioLaAHrTWPP-US99dh2c3xRWAwLqauvYauTXKX6If1OeR9-ZInRbjJ4_RVzFHTXJ4x-YvOImqBIQaILjSGdzVpyFoPYo5V67vxoUMk3QnSNh6l5kv03-NS8Zrxa7gJE";
-			var result = await client.GetStringAsync(new Uri("https://maps.googleapis.com/maps/api/place/photo?maxWidth=400&photoreference=" + reference + "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg"));
-		} 
 		#endregion
 	}
 }
