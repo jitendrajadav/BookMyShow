@@ -29,9 +29,6 @@ namespace BookMyShow
     {
         private TransitionCollection transitions;
 
-		private Geolocator _geolocator = null;
-		private CancellationTokenSource _cts = null;
-
 		/// <summary>
 		/// Initializes the singleton application object.  This is the first line of authored code
 		/// executed, and as such is the logical equivalent of main() or WinMain().
@@ -40,8 +37,6 @@ namespace BookMyShow
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
-			_geolocator = new Geolocator();
-			_geolocator.DesiredAccuracyInMeters = 10;
 			GetLocationProperty();
 		}
 
@@ -141,25 +136,37 @@ namespace BookMyShow
 
 		async void GetLocationProperty()
 		{
-			try
-			{
-				// Get cancellation token
-				_cts = new CancellationTokenSource();
-				CancellationToken token = _cts.Token;
 
-				// Carry out the operation
-				Geoposition pos = await _geolocator.GetGeopositionAsync().AsTask(token);
-				string Latitude = string.Empty;
-				string Longitude = string.Empty;
+            Geolocator geolocator = new Geolocator();
+            geolocator.DesiredAccuracyInMeters = 50;
+            string Latitude = string.Empty;
+            string Longitude = string.Empty;
+            Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
-				Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+            try
+            {
+                Geoposition geoposition = await geolocator.GetGeopositionAsync(
+                    maximumAge: TimeSpan.FromMinutes(5),
+                    timeout: TimeSpan.FromSeconds(10)
+                    );
 
-				Latitude = pos.Coordinate.Point.Position.Latitude.ToString();
-				Longitude = pos.Coordinate.Point.Position.Longitude.ToString();
-				localSettings.Values["latLong"] = Latitude +","+ Longitude;
-			}
-			catch
-			{ }
+                Latitude = geoposition.Coordinate.Point.Position.Latitude.ToString("0.00");
+                Longitude = geoposition.Coordinate.Point.Position.Longitude.ToString("0.00");
+                localSettings.Values["latLong"] = Latitude + "," + Longitude;
+                
+            }
+            catch (Exception ex)
+            {
+                if ((uint)ex.HResult == 0x80004004)
+                {
+                    // the application does not have the right capability or the location master switch is off
+                    //StatusTextBlock.Text = "location  is disabled in phone settings.";
+                }
+                //else
+                {
+                    // something else happened acquring the location
+                }
+            }
 		}
 	}
 }
