@@ -84,6 +84,12 @@ namespace BookMyShow.View
             MapIcon1.NormalizedAnchorPoint = new Point(0.5, 1.0);
             MapIcon1.Title = "You are here.!";
             myMap.MapElements.Add(MapIcon1);
+
+            //myMap.TrySetViewAsync(new Geopoint(new BasicGeoposition()
+            //{
+            //    Latitude = Convert.ToDouble(value.Split(',').FirstOrDefault()),
+            //    Longitude = Convert.ToDouble(value.Split(',').LastOrDefault())
+            //}), 15, 12,20);
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
@@ -95,7 +101,6 @@ namespace BookMyShow.View
         {
             this.navigationHelper.OnNavigatedFrom(e);
         }
-
 
         #endregion
     }
