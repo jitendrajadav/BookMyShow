@@ -15,9 +15,11 @@ namespace BookMyShow.ViewModel
 		#region Local Variable
 		Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 		#endregion
+        
+        #region Properties
 
-		#region PropertyChangedEventHandler
-		public event PropertyChangedEventHandler PropertyChanged;
+        #region PropertyChangedEventHandler
+        public event PropertyChangedEventHandler PropertyChanged;
 		private void RaisePropertyChanged(string propertyName)
 		{
 			if (this.PropertyChanged != null)
@@ -27,20 +29,25 @@ namespace BookMyShow.ViewModel
 		}
 		#endregion
 
-		#region Properties
+        #region PlaceList
+        private List<Result> _placesList;
 
-		private List<Result> _placesList;
-
-		public List<Result> PlaceList
-		{
-			get { return _placesList; }
-			set { _placesList = value;
-				RaisePropertyChanged("PlaceList");
-			}
-		}
-
+        public List<Result> PlaceList
+        {
+            get { return _placesList; }
+            set
+            {
+                _placesList = value;
+                RaisePropertyChanged("PlaceList");
+            }
+        } 
+        #endregion
 
 		#endregion
+
+        #region Commands
+
+        #endregion
 
 		#region Constructor
 		public ListViewModel()

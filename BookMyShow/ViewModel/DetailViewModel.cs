@@ -10,9 +10,18 @@ using System.Threading.Tasks;
 namespace BookMyShow.ViewModel
 {
 	class DetailViewModel : INotifyPropertyChanged
-	{
-		#region PropertyChangedEventHandler
-		public event PropertyChangedEventHandler PropertyChanged;
+    {
+        #region Local Variable
+
+        string basePath = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
+        string key = "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg";
+
+        #endregion
+
+        #region Properties
+
+        #region PropertyChangedEventHandler
+        public event PropertyChangedEventHandler PropertyChanged;
 		private void RaisePropertyChanged(string propertyName)
 		{
 			if (this.PropertyChanged != null)
@@ -21,11 +30,6 @@ namespace BookMyShow.ViewModel
 			}
 		}
 		#endregion
-
-		#region Properties
-
-        string basePath = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
-        string key = "&key=AIzaSyD3jfeMZK1SWfRFDgMfxn_zrGRSjE7S8Vg";
 
 		#region Icon
 
@@ -114,7 +118,11 @@ namespace BookMyShow.ViewModel
 
 		#endregion
 
-		#region Contructor
+        #region Commands
+
+        #endregion
+
+        #region Contructor
 		public DetailViewModel()
 		{
 

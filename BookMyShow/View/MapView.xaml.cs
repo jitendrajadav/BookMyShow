@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -24,6 +26,10 @@ namespace BookMyShow.View
     /// </summary>
     public sealed partial class MapView : Page
     {
+        #region Local Variable
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
+        #endregion
+
         private NavigationHelper navigationHelper;
 
         public MapView()
@@ -58,15 +64,26 @@ namespace BookMyShow.View
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             this.navigationHelper.OnNavigatedTo(e);
+            string value = (string)localSettings.Values["latLong"];
             // TODO: Prepare page for display here.
             BasicGeoposition obj = new BasicGeoposition();
             myMap.MapServiceToken = "abcdef-abcdefghijklmno";
-            obj.Latitude = 47.6097;
-            obj.Longitude = -122.3331;
+            obj.Latitude = Convert.ToDouble(value.Split(',').FirstOrDefault());
+            obj.Longitude = Convert.ToDouble(value.Split(',').LastOrDefault());
             myMap.Center = new Geopoint(obj);
             myMap.ZoomLevel = 16;
             myMap.LandmarksVisible = true;
             myMap.PedestrianFeaturesVisible = true;
+
+            MapIcon MapIcon1 = new MapIcon();
+            MapIcon1.Location = new Geopoint(new BasicGeoposition()
+            {
+                Latitude = Convert.ToDouble(value.Split(',').FirstOrDefault()),
+                Longitude = Convert.ToDouble(value.Split(',').LastOrDefault())
+            });
+            MapIcon1.NormalizedAnchorPoint = new Point(0.5, 1.0);
+            MapIcon1.Title = "You are here.!";
+            myMap.MapElements.Add(MapIcon1);
             // TODO: If your application contains multiple pages, ensure that you are
             // handling the hardware Back button by registering for the
             // Windows.Phone.UI.Input.HardwareButtons.BackPressed event.
@@ -78,6 +95,7 @@ namespace BookMyShow.View
         {
             this.navigationHelper.OnNavigatedFrom(e);
         }
+
 
         #endregion
     }

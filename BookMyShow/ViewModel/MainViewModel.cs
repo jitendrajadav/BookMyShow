@@ -10,9 +10,17 @@ using System.Threading;
 namespace BookMyShow.ViewModel
 {
 	class MainViewModel : INotifyPropertyChanged
-	{
-		#region PropertyChangedEventHandler
-		public event PropertyChangedEventHandler PropertyChanged;
+    {
+        #region Local Variable
+        
+        string[] placeList = new string[] { "food", "gym", "school", "hospital", "spa", "restaurant" };
+
+        #endregion
+
+        #region Properties
+
+        #region PropertyChangedEventHandler
+        public event PropertyChangedEventHandler PropertyChanged;
 		private void RaisePropertyChanged(string propertyName)
 		{
 			if (this.PropertyChanged != null)
@@ -21,10 +29,6 @@ namespace BookMyShow.ViewModel
 			}
 		}
 		#endregion
-
-		#region Properties
-
-		string[] placeList = new string[] { "food", "gym", "school", "hospital", "spa", "restaurant" };
 
 		#region Placelist
 
@@ -43,6 +47,10 @@ namespace BookMyShow.ViewModel
 
 		#endregion
 
+        #region Commnads
+
+        #endregion
+
 		#region Constructor
 		public MainViewModel()
 		{
@@ -50,5 +58,9 @@ namespace BookMyShow.ViewModel
 			Placelist.AddRange(placeList);
 		} 
 		#endregion
+
+        #region Methods
+
+        #endregion
 	}
 }
